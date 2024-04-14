@@ -26,6 +26,6 @@ tasks.named('test') {
 
 task helloWorld {
 	doLast {
-		println 'Hello, World!'
+		println 'Hello World, Hello Innovation.'
 	}
 }
