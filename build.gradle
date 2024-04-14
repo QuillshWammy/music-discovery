@@ -4,11 +4,11 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.4'
 }
 
-group = 'app'
+group = 'com.quillshwammy'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '22'
+	sourceCompatibility = '17'
 }
 
 repositories {
@@ -22,4 +22,10 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+task helloWorld {
+	doLast {
+		println 'Hello World, Hello Innovation.'
+	}
 }
