@@ -21,9 +21,10 @@ sudo service postgresql start # 起動
 sudo service postgresql stop # 停止
 sudo service postgresql status # 確認
 sudo -u postgres psql # suログイン
+psql -h local -U {your-name} -d {your-database} #ログイン
 
 ```
-（データベース内）
+psql接続時
 ```bash
 \l # データベース一覧の表示
 \c {your-database} # データベースへの接続
@@ -41,27 +42,28 @@ CREATE USER {your-name} WITH PASSWORD 'your_password';
 
 ユーザー名は`whoami`と一致させる
 <details>
-<summary>peer認証:`psql: error: FATAL: Peer authentication failed for user "postgres"`</summary>
+<summary>peer認証</summary>
+
+: `psql: error: FATAL: Peer authentication failed for user "postgres"`
 > ローカルからのアクセス時にpostgres（OS側）のユーザー名がpostgres（データベース側）のものと一致している場合のみ接続を許可する認証方法
 
-1. pg_hba.confを見つける
+1.pg_hba.confを見つける
 
 ```bash
 sudo find / -name pg_hba.conf
 ```
 
-2. 以下の部分を編集
+2.以下の部分を編集
 
 ```text
 # Database administrative login by Unix domain socket  
 local   all             postgres                                <s>peer</s> md5
 ```
-3. 再起動
+3.再起動
 
 ```bash
 sudo /etc/init.d/postgresql restart
 ```
-
 </details>
 
 新規データベース作成
