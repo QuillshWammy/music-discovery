@@ -75,7 +75,11 @@ CREATE DATABASE {your-database};
 GRANT ALL PRIVILEGES ON DATABASE {your-database} TO {your-name};
 ```
 
+[データベースの命名規則 - AVINTON](https://avinton.com/academy/database-naming-conventions/)
 
+### Spring Boot
+
+[Spring Boot × PostgreSQLによるデータ登録Tips.(解説付)](https://qiita.com/Keichan_15/items/b732bea7c9868c1e9f6c)
 
 ## Concerns
 
