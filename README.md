@@ -19,10 +19,10 @@
 ```bash
 sudo service postgresql start # 起動
 sudo service postgresql stop # 停止
+sudo service postgresql restart # 再起動
 sudo service postgresql status # 確認
 sudo -u postgres psql # suログイン
-psql -h local -U {your-name} -d {your-database} #ログイン
-
+psql psql -h localhost -p 5432 -U {your-name} -d {your-database} #ログイン
 ```
 psql接続時
 ```bash
@@ -30,6 +30,7 @@ psql接続時
 \c {your-database} # データベースへの接続
 \d # リレーション一覧表示
 \dt # テーブル一覧表示 
+\d {table-name} # テーブルの詳細表示
 \du # ロールの一覧表示
 \q # 終了
 ```
