@@ -15,15 +15,17 @@
 
 ### PostgreSQL
 
-基本コマンド
+基本コマンド(Linux)
 ```bash
 sudo service postgresql start # 起動
 sudo service postgresql stop # 停止
 sudo service postgresql restart # 再起動
 sudo service postgresql status # 確認
 sudo -u postgres psql # suログイン
-psql psql -h localhost -p 5432 -U {your-name} -d {your-database} #ログイン
+psql -h localhost -p 5432 -U {your-name} -d {your-database} #ログイン
 ```
+
+基本コマンド(Windows)
 psql接続時
 ```bash
 \l # データベース一覧の表示
