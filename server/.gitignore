@@ -37,6 +37,3 @@ build/
 .vscode/
 bin/
 
-### References ###
-/references
-/spring-book-src-master
