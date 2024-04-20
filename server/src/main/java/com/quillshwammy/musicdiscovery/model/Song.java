@@ -2,7 +2,7 @@ package com.quillshwammy.musicdiscovery.model;
 
 import java.time.LocalDateTime;
 
-public class Songs {
+public class Song {
     private int id;
     private String songName;
     private String artistName;
