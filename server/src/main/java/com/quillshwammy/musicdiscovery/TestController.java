@@ -32,5 +32,6 @@ public class TestController {
         List<Map<String,Object>> list;
         list = jdbcTemplate.queryForList("select * from users where id = ?", id);
         return list.toString();
+        
     }
 }
