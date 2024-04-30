@@ -2,7 +2,7 @@
 
 ## 値のバリデーションをしたいとき
 
-```ts
+```typescript
 <template>
   <form @submit.prevent="onSubmit">
     <div>
@@ -62,7 +62,6 @@ export default defineComponent({
         errors.name = ''
       }
     }
-
     const validateSharesIssued = (value: string) => {
       const num = Number(value)
       if (num < 1 || num > 1000000000) {
