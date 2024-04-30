@@ -24,14 +24,15 @@ public class TestController {
     public String index() {
         List<Map<String,Object>> list;
         list = jdbcTemplate.queryForList("select * from users");
+        LOG.info("{}", list.toString());
         return list.toString();
     }
 
     @RequestMapping(path="/users/{id}", method=RequestMethod.GET)
     public String read(@PathVariable String id) {
         List<Map<String,Object>> list;
+        LOG.info("{}", id);
         list = jdbcTemplate.queryForList("select * from users where id = ?", id);
         return list.toString();
-        
     }
 }
