@@ -89,3 +89,33 @@ spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.Ph
 [18] INNER JOINでエラーメッセージ「Column 'カラム名' in field list is ... https://qiita.com/takaya_hiyama/items/2e7087b6d07079a15e29
 [19] Spring Bootでデータベースにアクセスしよう - CodeZine https://codezine.jp/article/detail/11584
 [20] Spring JDBC Batch Inserts | Baeldung https://www.baeldung.com/spring-jdbc-batch-inserts
+
+tbodyで作成したテーブルのセル内で文字列が幅を超えた場合に、折り返しではなく省略記号（...）で表示するには、以下のCSSを適用します。
+
+```css
+tbody td {
+  max-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+```
+
+各プロパティの説明:
+- `max-width: 0;` - セルの最大幅を0に設定し、コンテンツに合わせて広がるようにする[7]
+- `overflow: hidden;` - セルからはみ出した内容を非表示にする[1][6][8]
+- `text-overflow: ellipsis;` - はみ出した内容を省略記号（...）で表示する[1][5][6][7][8]
+- `white-space: nowrap;` - セル内のテキストの折り返しを禁止する[1][5][6][7]
+
+これらのCSSを組み合わせることで、tbodyのセル内で文字列が幅を超えた場合に、省略記号で表示することができます。
+overflow: hiddenとtext-overflow: ellipsisの組み合わせがポイントです。
+
+情報源
+[1] text-overflow - CSS: カスケーディングスタイルシート - MDN Web Docs https://developer.mozilla.org/ja/docs/Web/CSS/text-overflow
+[2] table内の文字の折り返しが効かない時white-space: normal - アトリエロワ https://atelierroi.com/tecnicalnote/htmlcss/table-word/
+[3] 文字列の折り返しを表現する CSSプロパティ - Qiita https://qiita.com/karasu_maru/items/353658a7bdc1e7395337
+[4] 表(table)の 列の文字が はみ出さないように改行する方法 https://syumi3.com/sonota/html_pasokon/table-word-wrap.html
+[5] CSS テーブルのセルで入りきらない文字列をカットして表示する https://zukucode.com/2019/10/css-table-ellipsis.html
+[6] CSS：tableのセル内文字が長くなったときに省略をする方法 https://satoshimurata.com/text-overflow-in-table
+[7] table内での三点リーダー（...）の表示を調べたら、意外と深かった話 - Zenn https://zenn.dev/milkandhoney995/articles/63eb778df55361
+[8] CSSで、はみだし省略 w/ Ellipsis - lambda consulting http://blog.lambda-consulting.jp/2016/02/21/article/
