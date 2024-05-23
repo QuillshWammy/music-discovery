@@ -6,7 +6,7 @@ PrimeVueを使って現在の月を表示するカレンダーを作成し、各
 <template>
   <div>
     <Calendar v-model="selectedDate" :inline="true" :manualInput="false" 
-      @date-select="onDateSelect" />
+      @date-select="onDateSelect" class="custom-calendar" />
   </div>
 </template>
 
@@ -24,6 +24,21 @@ const onDateSelect = (event) => {
   router.push(`/date/${year}/${month}/${day}`);
 };
 </script>
+
+<style scoped>
+.custom-calendar {
+  font-size: 1.5rem;
+}
+
+.custom-calendar .p-datepicker table {
+  width: 100%;
+  font-size: 1.2rem;
+}
+
+.custom-calendar .p-datepicker-header {
+  font-size: 1.5rem;
+}
+</style>
 ```
 
 ポイントは以下の通りです。
