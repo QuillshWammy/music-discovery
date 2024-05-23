@@ -5,23 +5,33 @@ PrimeVueを使って現在の月を表示するカレンダーを作成し、各
 ```vue
 <template>
   <div>
-    <Calendar v-model="selectedDate" :inline="true" :manualInput="false" 
-      @date-select="onDateSelect" class="custom-calendar" />
+    <Calendar 
+      v-model="selectedDate" 
+      :inline="true" 
+      :manualInput="false" 
+      @date-select="onDateSelect" 
+      class="custom-calendar" 
+    />
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 import Calendar from 'primevue/calendar';
-import router from './router';
+import { useRouter } from 'vue-router';
 
-const selectedDate = ref(new Date());
+const selectedDate = ref<Date>(new Date());
+const router = useRouter();
 
-const onDateSelect = (event) => {
-  const year = event.year;
-  const month = event.month + 1;
-  const day = event.day;
-  router.push(`/date/${year}/${month}/${day}`);
+interface DateSelectEvent {
+  year: number;
+  month: number;
+  day: number;
+}
+
+const onDateSelect = (event: DateSelectEvent) => {
+  const { year, month, day } = event;
+  router.push(`/date/${year}/${month + 1}/${day}`);
 };
 </script>
 
@@ -29,12 +39,10 @@ const onDateSelect = (event) => {
 .custom-calendar {
   font-size: 1.5rem;
 }
-
 .custom-calendar .p-datepicker table {
   width: 100%;
   font-size: 1.2rem;
 }
-
 .custom-calendar .p-datepicker-header {
   font-size: 1.5rem;
 }
