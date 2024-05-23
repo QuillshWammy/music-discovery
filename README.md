@@ -7,6 +7,91 @@
 - Spring Boot
 - Vue.js
 
+boot strap vue nextを使って、Vue 3 + TypeScriptの環境で現在の月のカレンダーを表示する方法は以下の通りです。
+
+まず、必要なパッケージをインストールします。
+
+```bash
+npm install bootstrap-vue-next
+```
+
+次に、`main.ts`ファイルで`BootstrapVue`プラグインを登録します。
+
+```ts
+import { createApp } from 'vue'
+import App from './App.vue'
+import BootstrapVue from 'bootstrap-vue-next'
+
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
+
+const app = createApp(App)
+app.use(BootstrapVue)
+app.mount('#app')
+```
+
+そして、カレンダーコンポーネントを作成します。例えば`src/components/Calendar.vue`に以下のように記述します。
+
+```vue
+<template>
+  <div>
+    <b-calendar v-model="value" :min="min" :max="max" locale="en"></b-calendar>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const value = ref('')
+const min = new Date()
+min.setMonth(min.getMonth(), 1)
+const max = new Date(min.getFullYear(), min.getMonth() + 1, 0)
+</script>
+```
+
+ポイントは以下の通りです:
+
+- `v-model`で選択された日付を双方向バインディングします。
+- `min`と`max`プロパティで、表示する月の最初の日と最後の日を指定します[13]。
+- `locale`プロパティで言語を指定します。ここでは英語を指定しています。
+
+最後に、このカレンダーコンポーネントを使用したい場所で以下のように記述します。
+
+```vue
+<template>
+  <Calendar />
+</template>
+
+<script setup lang="ts">
+import Calendar from '@/components/Calendar.vue'
+</script>
+```
+
+以上で、boot strap vue nextを使ってVue 3 + TypeScriptで現在の月のカレンダーを表示できます。カレンダーの詳細なカスタマイズ方法については、boot strap vue nextの公式ドキュメント[14]を参照してください。
+
+情報源
+[1] 1: Let's build calendar UI from scratch using Vue 3, TS and Tailwind https://www.youtube.com/watch?v=UE38VFrKlmo
+[2] Vuetify calendar in typescript class based component - Stack Overflow https://stackoverflow.com/questions/57415142/vuetify-calendar-in-typescript-class-based-component
+[3] Vue3+Typescriptのネストコンポーネント間データの受け渡し - Qiita https://qiita.com/leokryslov/items/64c2c53f3054dde2429d
+[4] Vue3 datepicker: How to display the default calendar given for a ... https://stackoverflow.com/questions/78081667/vue3-datepicker-how-to-display-the-default-calendar-given-for-a-specific-month
+[5] vue-calendar-3 - NPM https://www.npmjs.com/package/vue-calendar-3
+[6] Vue Component - Docs - FullCalendar https://fullcalendar.io/docs/vue
+[7] Slots - Content - Vue Datepicker https://vue3datepicker.com/slots/content/
+[8] Calendar Component in React with TypeScript - GitHub https://github.com/jjunyjjuny/react-calendar
+[9] Creating Calendar App using TypeScript and React - YouTube https://www.youtube.com/watch?v=NKhBqbuzDMI
+[10] Vue 3 - How do i wrap a component in Vue with typescript https://stackoverflow.com/questions/77796744/vue-3-how-do-i-wrap-a-component-in-vue-with-typescript
+[11] React Calendar: A Guide to Building Dynamic ... - DEV Community https://dev.to/martinpersson/react-material-ui-create-a-dynamic-calendar-with-integrated-todos-6cm
+[12] Props - Calendar configuration - Vue Datepicker https://vue3datepicker.com/props/calendar-configuration/
+[13] Form Datepicker | Components - BootstrapVue https://bootstrap-vue.org/docs/components/form-datepicker
+[14] Calendar | Components - BootstrapVue https://bootstrap-vue.org/docs/components/calendar
+[15] bootstrap-vue how to include b-form-datepicker in b-dropdown https://stackoverflow.com/questions/66352178/bootstrap-vue-how-to-include-b-form-datepicker-in-b-dropdown
+[16] React.js Typescript DatePicker Calendar Input date field - YouTube https://www.youtube.com/watch?v=yzx6QIOKk_Q
+[17] Configuration | Vue 3 Datepicker - GitHub Pages https://icehaunter.github.io/vue3-datepicker/config.html
+[18] fullcalendar/CHANGELOG.md at main - GitHub https://github.com/fullcalendar/fullcalendar/blob/main/CHANGELOG.md
+[19] Vue Calendar Component - PrimeVue https://primevue.org/calendar/
+[20] Layouts - VCalendar https://vcalendar.io/calendar/layouts
+
+
 はい、Spring Data JPAのJpaSpecificationExecutorインターフェースには、ソート機能を含むfindAllメソッドのオーバーロードがあります。以下のようにSpecificationとSortを組み合わせることができます。
 
 ```java
