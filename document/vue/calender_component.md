@@ -1,5 +1,100 @@
 # カレンダーのコンポーネント
 
+Vue3とTypeScriptを使用して親コンポーネントから子コンポーネントにデータを渡す場合、以下の方法があります。
+
+1. Props を使用する方法
+親コンポーネントから子コンポーネントにデータを渡すには、Propsを使用するのが一般的です。[1][8][11][12]
+
+親コンポーネント（Parent.vue）:
+```
+<template>
+  <ChildComponent :title="title" :content="content" />
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+import ChildComponent from './ChildComponent.vue';
+
+const title = ref('Hello');
+const content = ref('This is a message from parent.');
+</script>
+```
+
+子コンポーネント（ChildComponent.vue）:
+```
+<template>
+  <h2>{{ title }}</h2>
+  <p>{{ content }}</p>
+</template>
+
+<script setup lang="ts">
+defineProps<{
+  title: string;
+  content: string;
+}>();
+</script>
+```
+
+2. provide/inject を使用する方法
+親コンポーネントから孫コンポーネントなど、より深い階層のコンポーネントにデータを渡す場合は、provide/injectを使用できます。[7][9][13][14][17][20]
+
+親コンポーネント（Parent.vue）:
+```
+<template>
+  <ChildComponent />
+</template>
+
+<script setup lang="ts">
+import { provide } from 'vue';
+import ChildComponent from './ChildComponent.vue';
+
+provide('message', 'Hello from parent');
+</script>
+```
+
+子コンポーネント（ChildComponent.vue）:
+```
+<template>
+  <p>{{ message }}</p>
+</template>
+
+<script setup lang="ts">
+import { inject } from 'vue';
+
+const message = inject<string>('message');
+</script>
+```
+
+また、TypeScriptを使用する際の注意点として、以下があります。
+
+- Props の型定義には、definePropsを使用し、ジェネリクスで型を指定する[10][15][16]
+- provide/injectでキーを指定する際は、シンボルを使用したInjectionKeyを使うとよい[7][9][14][17]
+- emitの型定義にはdefineEmitsを使用する[4][19]
+
+以上のように、Vue3とTypeScriptを使用することで、型の安全性を保ちながら親子コンポーネント間でデータをやり取りすることができます。コンポーネントの責務や構成に応じて適切な方法を選択してください。
+
+情報源
+[1] How to pass data from parent to child components in Vue.js? https://compiletab.com/pass-data-parent-child-components-vuejs/
+[2] A Guide to Passing Data from Parent to Child Component in Vue.js https://salkobalic.com/guide-to-passing-data-from-parent-to-child-component-in-vuejs
+[3] How to use props to pass data to child components in Vue 3 https://blog.logrocket.com/use-props-pass-data-child-components-vue-3/
+[4] vue.js - How to emit events with a strictly typed payload? https://stackoverflow.com/questions/67094213/how-to-emit-events-with-a-strictly-typed-payload-vue-3-composition-api-type
+[5] Composition API: Dependency Injection - Vue.js https://vuejs.org/api/composition-api-dependency-injection
+[6] How to Call a Parent Method from a Child Component in Vue 3 https://www.geeksforgeeks.org/how-to-call-a-parent-method-from-a-child-component-in-vue-3/
+[7] ProvideとInjectをComposition APIとTypeScriptで解説 - TekRog https://tekrog.com/use-provide-and-inject-with-composition-api-and-typescript
+[8] Techniques for Sharing Data between Vue.js Components https://vueschool.io/articles/vuejs-tutorials/techniques-for-sharing-data-between-vue-js-components/
+[9] Composition API で TypeScript を使用する - Vue.js https://ja.vuejs.org/guide/typescript/composition-api
+[10] 【Vue.js 3】TypeScriptで始めるVue3 - Zenn https://zenn.dev/knm/articles/09154e02dbe507
+[11] Vue.js Patterns: Using Vue.js 3 Composition API for Reactive Parent ... https://lirantal.com/blog/vuejs-patterns-using-vuejs-3-composition-api-for-reactive-parent-to-child-communication/
+[12] Components Basics - Vue.js https://vuejs.org/guide/essentials/component-basics
+[13] Provide/Injectの使い方/コードサンプル/注意点【備忘録】 #Vue.js https://qiita.com/ta-hiro/items/d22ac3f597175e3d0c17
+[14] Composition API: 依存関係の注入 - Vue.js https://ja.vuejs.org/api/composition-api-dependency-injection
+[15] TypeScript with Composition API - Vue.js https://vuejs.org/guide/typescript/composition-api
+[16] Vue3 Props Validation #TypeScript - Qiita https://qiita.com/kawabata324/items/5c8d3a789e080a426285
+[17] Composition APIによる Provide / Inject を整理 #TypeScript - Qiita https://qiita.com/fujimmm331/items/5baa1e7b648ea8a71b03
+[18] TypeScriptのサポートが強化されたVue3.3の新機能とは？    Propsと ... https://codezine.jp/article/detail/18306
+[19] Working with emits in Vue 3 + Typescript - DEV Community https://dev.to/cn-2k/working-with-emits-in-vue-3-typescript-2a1j
+[20] Vue3 - コンポーネント連携（Provide/Inject・Pinia） - Zenn https://zenn.dev/aono/articles/cd1eed66b39eff
+
 PrimeVueを使って現在の月を表示するカレンダーを作成し、各日付にリンクを設定して日付ページに遷移する方法は以下の通りです。
 
 ```vue
