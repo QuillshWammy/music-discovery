@@ -9,6 +9,8 @@
  - 右上の「設定（JSON）を開く」アイコンをクリック
 
 3. settings.jsonに以下の設定を追加する
+
+zenhanをインストールし、そのパスを確認します。
  ```cson
  "vim.autoSwitchInputMethod.enable": true,
  "vim.autoSwitchInputMethod.defaultIM": "1",
