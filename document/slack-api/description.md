@@ -1,5 +1,77 @@
 # Slack APIの連携
 
+Slack Boltで`users.lookupByEmail`メソッドを使ってユーザーのメールアドレスからユーザーIDを取得する方法を、TypeScriptで示します。
+
+1. 必要な依存関係をインストールします。
+
+```bash
+npm install @slack/bolt @slack/web-api
+```
+
+2. `app.ts`ファイルを作成し、以下のコードを記述します。
+
+```typescript
+import { App, LogLevel } from '@slack/bolt';
+import { WebClient } from '@slack/web-api';
+
+// Slack BotトークンとアプリトークンをEnvironment Variablesから取得
+const botToken = process.env.SLACK_BOT_TOKEN;
+const appToken = process.env.SLACK_APP_TOKEN;
+
+const app = new App({
+  token: botToken,
+  appToken: appToken,
+  logLevel: LogLevel.DEBUG, // デバッグログを有効化
+  socketMode: true // ソケットモードを有効化
+});
+
+const client = new WebClient(botToken);
+
+// メールアドレスからユーザーIDを取得する関数
+async function getUserIdByEmail(email: string): Promise<string | undefined> {
+  try {
+    const result = await client.users.lookupByEmail({ email });
+    if (result.ok && result.user) {
+      return result.user.id;
+    } else {
+      console.error(`Error looking up email ${email}: ${result.error}`);
+    }
+  } catch (error) {
+    console.error(`Error looking up email ${email}: ${error}`);
+  }
+}
+
+// アプリの起動
+(async () => {
+  await app.start();
+  console.log('⚡️ Bolt app started');
+})();
+```
+
+3. アプリを実行します。
+
+```bash
+npm start
+```
+
+この例では、`getUserIdByEmail`関数を使って、メールアドレスからユーザーIDを取得しています。この関数は`users.lookupByEmail`メソッドを呼び出し、結果を処理しています。
+
+- `users.lookupByEmail`メソッドを使うには、アプリに`users:read.email`スコープが必要です[1][4]。
+- エラーハンドリングを適切に行うことが重要です[4]。
+- ログレベルを`LogLevel.DEBUG`に設定すると、接続状態などの詳細なログが出力されます[1][2]。
+
+この例では、ソケットモードを有効にしていますが、HTTPリクエストを処理する場合は`receiver`を設定する必要があります[2]。
+
+Slack Boltを使えば、Slackアプリの開発がシンプルになり、WebSocketを使ったリアルタイム通信も簡単に実装できます。適切なスコープを設定し、エラーハンドリングを行えば、ユーザー情報の取得などの基本的な機能を実装できます。
+
+情報源
+[1] Bolt 入門ガイド - Slack | Bolt for JavaScript https://slack.dev/bolt-js/ja-jp/tutorial/getting-started
+[2] Ack 関数 - Slack | Bolt for JavaScript https://slack.dev/bolt-js/ja-jp/concepts
+[3] Bolt for JavaScript - Slack Platform Developer Tools https://slack.dev/bolt-js/concepts
+[4] 全社員へのメールを個別にSlackで通知する - VisasQ Dev Blog https://tech.visasq.com/notify-mail-to-slack/
+[5] Slack: ユーザ名取得 - Questetra Support https://support.questetra.com/ja/bpmn-icons/service-task-slack-username-get/
+
+
 はい、Slack APIを使ってイベントページ管理システムと連携する具体的な方法をまとめると以下のようになります。
 
 1. Slack APIアプリを作成する
