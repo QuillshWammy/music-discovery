@@ -1,5 +1,62 @@
 # Slack APIの連携
 
+Slack BoltとSpring MVCの連携は、Webhookなしでも可能ですが、その実装には直接的なAPI通信やイベントリスナーを使うことが必要になります。以下はその方法についての概要です。
+
+### 1. Bolt for Javaを使用したSlackアプリの実装
+
+Bolt for Javaは、SlackのAPIと連携するためのライブラリです。これを使って、Slackアプリケーションを作成し、Spring MVCと連携させることができます。
+
+#### 主要ステップ：
+- **Bolt for Javaの設定**：Slackアプリケーションを作成し、APIトークンを取得します。これを使ってBoltの設定を行います。
+- **Spring BootアプリケーションにBoltを組み込む**：Spring Bootアプリケーションの設定にBoltを組み込み、必要なエンドポイントを作成します。
+- **イベントリスナーの実装**：Slackのイベントをリッスンするリスナーを実装し、必要な処理を行います。
+
+### 2. SlackのAPIエンドポイントの設定
+
+Slack APIエンドポイントを設定し、Bolt for Javaと連携することで、SlackのイベントをSpring MVCで処理できます。これには、OAuth 2.0認証やイベントサブスクリプションの設定が含まれます。
+
+#### 主要ステップ：
+- **APIエンドポイントの作成**：Spring MVCでSlackのイベントを受け取るためのエンドポイントを作成します。
+- **イベントの処理**：受け取ったイベントを適切に処理するためのサービスやコントローラーを実装します。
+
+### 3. サンプルコード
+
+以下は、基本的なセットアップの例です。
+
+```java
+// Spring Bootアプリケーションのメインクラス
+@SpringBootApplication
+public class SlackApp {
+
+    public static void main(String[] args) {
+        SpringApplication.run(SlackApp.class, args);
+    }
+
+    @Bean
+    public App initSlackApp() {
+        AppConfig config = new AppConfig();
+        config.setSingleTeamBotToken("YOUR_BOT_TOKEN");
+        return new App(config);
+    }
+}
+
+// Slackイベントを処理するコントローラー
+@RestController
+@RequestMapping("/slack/events")
+public class SlackEventController {
+
+    @Autowired
+    private App slackApp;
+
+    @PostMapping
+    public ResponseEntity<String> handleEvent(@RequestBody String payload) {
+        return slackApp.run(payload).toEntity();
+    }
+}
+```
+
+### まとめ
+Webhookなしでも、Slack Bolt for JavaとSpring MVCを使って連携することは可能です。ただし、この場合は直接APIリクエストやイベントリスナーを使って処理を実装する必要があります。設定や実装が多少複雑になることがあるため、詳細なドキュメントやサンプルコードを参考にしながら進めると良いでしょう。
 Slack Boltで`users.lookupByEmail`メソッドを使ってユーザーのメールアドレスからユーザーIDを取得する方法を、TypeScriptで示します。
 
 1. 必要な依存関係をインストールします。
