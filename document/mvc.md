@@ -1,5 +1,43 @@
 # MVC 三層モデルについて
 
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import Home from '@/views/Home.vue'
+import About from '@/views/About.vue'
+
+const routes: Array<RouteRecordRaw> = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: About
+  },
+  // 他のルートもここに追加
+]
+
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    // 戻る操作の場合、保存された位置にスクロール
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      // 特定のパスに対してはページトップにスクロール、それ以外は位置を引き継ぐ
+      if (to.path === '/about') {
+        return { top: 0 }
+      }
+      // デフォルトでは位置を保持
+      return { left: 0, top: 0 }
+    }
+  }
+})
+
+export default router
+
 ## Tips
 
 ### Gradle
